@@ -1,10 +1,21 @@
 # Dungeon-Crawlers
+```
 Repository for dungeon crawlers
+What's been done in each Branch:
+```
+## Adi Branch 
 
+## Andras Branch
 
-TEST
+## Johan Branch
 
-TEST 1
+## Lennart Branch
 
+## Martin Branch
 
-TAWOJADOJWOAKWOWDKALPWLDÅ1K2EO1KR+1KR SPAM
+## Mehsum Branch
+- Created Upstream to Lenjuz
+- Created branch
+- Virtual environment
+- Updated Python Interpreter
+- Initial text added
