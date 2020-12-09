@@ -111,7 +111,15 @@ def map_size_choice():
     pass
 
 
-def save_character(characters_list):
+def save_current_game_character(characters_list, game_character):
+    for a in characters_list:
+        if a.name == game_character.name:
+            # Setting/Saving new wallet-value of character
+            a.wallet == game_character.wallet
+            print("Values saved for in-game character:\n", a)
+
+
+def save_character_list(characters_list):
     data = {}
     data["Heros"] = []
 
@@ -125,11 +133,18 @@ def save_character(characters_list):
         json.dump(data, output_file, indent=4)
 
 
-def quit_game(characters_list):
-    if len(characters_list) > 0:
-        # diverts to save_character function if list of characters not empty
-        save_character(characters_list)
+# If in-game character dies, exceeds map limits or manually want to quit:
+# calls this function with character_list, game_character arguments given.
+def quit_game(characters_list, game_character):
+    # First, update in-game character values
+    save_current_game_character(characters_list, game_character)
 
+    # Second: saving entire character list to files (if any list to be saved)
+    if len(characters_list) > 0:
+        # diverts to save_character_list function if list of characters not empty
+        save_character_list(characters_list)
+
+    # Third: Quitting game
     print("QUITING", end="")
     for index in range(4):
         print(".", end="", flush=True)
@@ -179,7 +194,7 @@ def start_game():
     map_size_choice()
 
     # If user leaves map, dies or manually wants to quit: quit_game function is called
-    quit_game(characters_list)
+    quit_game(characters_list, game_character)
 
 
 def main():

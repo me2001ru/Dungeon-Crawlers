@@ -29,6 +29,16 @@
             "agility": 7,
             "special": "Critical Hit",
             "wallet": 0
+        },
+        {
+            "name": "Testw1zz",
+            "character": "Wizard",
+            "initiative": 6,
+            "endurance": 4,
+            "attack": 9,
+            "agility": 5,
+            "special": "Blinding Light",
+            "wallet": 0
         }
     ]
 }
