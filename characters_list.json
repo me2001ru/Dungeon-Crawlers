@@ -1,40 +1,34 @@
 {
     "Heros": [
         {
-            "name": "robinhood",
-            "character": "Knight",
-            "initiative": 5,
-            "endurance": 9,
-            "attack": 6,
-            "agility": 4,
-            "sepcial": "Shield Block"
-        },
-        {
-            "name": "gandalfthegrey",
+            "name": "gandalf",
             "character": "Wizard",
             "initiative": 6,
             "endurance": 4,
             "attack": 9,
             "agility": 5,
-            "sepcial": "Blinding Light"
+            "special": "Blinding Light",
+            "wallet": 0
         },
         {
-            "name": "nronethief",
-            "character": "Thief",
-            "initiative": 7,
-            "endurance": 5,
-            "attack": 5,
-            "agility": 7,
-            "sepcial": "Critical Hit"
-        },
-        {
-            "name": "jamielannister",
+            "name": "RobinHood",
             "character": "Knight",
             "initiative": 5,
             "endurance": 9,
             "attack": 6,
             "agility": 4,
-            "sepcial": "Shield Block"
+            "special": "Shield Block",
+            "wallet": 0
+        },
+        {
+            "name": "Joker",
+            "character": "Thief",
+            "initiative": 7,
+            "endurance": 5,
+            "attack": 5,
+            "agility": 7,
+            "special": "Critical Hit",
+            "wallet": 0
         }
     ]
 }
