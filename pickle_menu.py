@@ -1,7 +1,12 @@
 import time
 import pickle
 from dungeonmap import DungeonMap
+from movement import *
 from characters_pickle_design import *
+
+
+def map_function():
+    ok()
 
 
 def quit_game():
@@ -14,7 +19,7 @@ def quit_game():
 
 
 def start_game():
-    input("Welcome user..to...THE DUNGEON-CRAWLER...!\nPress ENTER to START GAME")
+    input("\nWelcome user..to...THE DUNGEON-CRAWLER...!\nPress ENTER to START GAME")
 
     game = Handle()
     all_obj = game.load_pickle()
@@ -31,7 +36,6 @@ def start_game():
             input_not_fulfilled = False
 
             hero_selection = int(input("Pick your Hero\n1.The Knight !\n2.Wizard\n3.The Thief\n>>"))
-
             name_occupied = True
             while name_occupied:
                 hero_name = input("Give your hero a name: ")
@@ -54,28 +58,24 @@ def start_game():
 
             # Sparar gubbe (till nästa gång)
             game.save(in_game_char)
-
             print("OK '" + in_game_char.name + "' let's go!")
 
         elif user_entry2 == 'L':
             input_not_fulfilled = False
 
-            print("\t\t---------SAVED HERO OPTIONS---------")
-            print("{:10}{:10}{:10}{:>10}{:>10}{:>10}{:>13}{:>13}\n".format("Name", "Type", "Initiative", "Health", "Attack", "Agility", "Specialty", "Money"))
+            print("\n\t\t---------SAVED HERO OPTIONS---------")
+            print("{:>6}{:>10}{:>15}{:>10}{:>10}{:>10}{:>14}{:>13}\n".format("Name", "Type", "Initiative", "Health", "Attack", "Agility", "Specialty", "Money"))
             for count, obj in enumerate(all_obj, 1):
                 print(count, obj)
 
             my_char = int(input("CHOOSE SAVED CHARACTER BY NUMBER  >>"))
-            # print(all_obj[my_char - 1])
             in_game_char = all_obj[my_char - 1]
             print("Chosen character: ", in_game_char.name)
 
         else:
             print("Option N/A.\nTry again...")
 
-    b = int(input("Enter size for map: 4, 5, 8  >>"))
-    a = DungeonMap(b)
-    a.display_map()
+    map_function()
 
     quit_game()
 
