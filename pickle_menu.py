@@ -43,8 +43,8 @@ def start_game():
         if user_entry2 == 'N':
             input_not_fulfilled = False
 
-            banner_text("\n--------------Pick your Hero")
-            hero_selection = int(input("\n--------------\n1.The Knight !\n2.Wizard\n3.The Thief\n>>"))
+            banner_text("--------------\nPick your Hero\n--------------")
+            hero_selection = int(input("\n1.The Knight !\n2.Wizard\n3.The Thief\n>>"))
             name_occupied = True
             while name_occupied:
                 banner_text("Give your hero a name >>")
