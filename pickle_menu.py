@@ -5,6 +5,12 @@ from movement import *
 from characters_pickle_design import *
 
 
+def banner_text(text):
+    for index in text:
+        print(index, end='', flush=True)
+        time.sleep(0.03)
+
+
 def map_function():
     ok()
 
@@ -19,7 +25,8 @@ def quit_game():
 
 
 def start_game():
-    input("\nWelcome user..to...THE DUNGEON-CRAWLER...!\nPress ENTER to START GAME")
+    banner_text("\nWelcome to THE DUNGEON-CRAWLER !\nPress ENTER to START GAME")
+    input()
 
     game = Handle()
     all_obj = game.load_pickle()
@@ -30,15 +37,18 @@ def start_game():
     input_not_fulfilled = True
     while input_not_fulfilled:
         # user prompt to create or load character
-        user_entry2 = input("Create new player (N) / Load player (L)  >>").upper()
+        banner_text("Create new player (N) / Load player (L)  >>")
+        user_entry2 = input().upper()
 
         if user_entry2 == 'N':
             input_not_fulfilled = False
 
-            hero_selection = int(input("Pick your Hero\n1.The Knight !\n2.Wizard\n3.The Thief\n>>"))
+            banner_text("\n--------------Pick your Hero")
+            hero_selection = int(input("\n--------------\n1.The Knight !\n2.Wizard\n3.The Thief\n>>"))
             name_occupied = True
             while name_occupied:
-                hero_name = input("Give your hero a name: ")
+                banner_text("Give your hero a name >>")
+                hero_name = input()
 
                 # checks in list if name is already taken or name length not longer then 10 spaces
                 if hero_name not in reserved_name and len(hero_name) < 10:
@@ -63,12 +73,13 @@ def start_game():
         elif user_entry2 == 'L':
             input_not_fulfilled = False
 
-            print("\n\t\t---------SAVED HERO OPTIONS---------")
+            print("\n\t\t\t---------SAVED HERO OPTIONS---------")
             print("{:>6}{:>10}{:>15}{:>10}{:>10}{:>10}{:>14}{:>13}\n".format("Name", "Type", "Initiative", "Health", "Attack", "Agility", "Specialty", "Money"))
             for count, obj in enumerate(all_obj, 1):
                 print(count, obj)
 
-            my_char = int(input("CHOOSE SAVED CHARACTER BY NUMBER  >>"))
+            banner_text("CHOOSE SAVED CHARACTER BY NUMBER  >>")
+            my_char = int(input())
             in_game_char = all_obj[my_char - 1]
             print("Chosen character: ", in_game_char.name)
 
