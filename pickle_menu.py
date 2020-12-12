@@ -1,7 +1,7 @@
 import time
 import pickle
-from dungeonmap import DungeonMap
-from movement import *
+from DungeonWorld import DungeonMap
+from movement_2 import *
 from characters_pickle_design import *
 
 
@@ -12,7 +12,29 @@ def banner_text(text):
 
 
 def map_function():
-    ok()
+    # MENY SAKER TILL MAPS
+    mapsize = int(input("How big do you want your map? "))
+    corner = int(input("Which corner do you want to start in?\nTop Left = 1\nBottom Left = 2\nTop Right = 3\nBottom Left = 4\n"))
+    if corner == 1:
+        startzone = (0, 0)
+        endzone = (mapsize - 1, mapsize - 1)
+
+    elif corner == 2:
+        startzone = (0, mapsize - 1)
+        endzone = (mapsize - 1, 0)
+
+    elif corner == 3:
+        startzone = (mapsize - 1, 0)
+        endzone = (0, mapsize - 1)
+
+    elif corner == 4:
+        startzone = (mapsize - 1, mapsize - 1)
+        endzone = (0, 0)
+    print("mapsize: ", mapsize)
+    print("corner: ", corner)
+    print("startzone: ", startzone)
+    print("endzone: ", endzone)
+    ok(mapsize, startzone, endzone)
 
 
 def quit_game():
