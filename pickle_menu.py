@@ -11,10 +11,12 @@ def banner_text(text):
         time.sleep(0.03)
 
 
-def map_function():
+def map_function(in_game_char):
     # MENY SAKER TILL MAPS
-    mapsize = int(input("How big do you want your map? "))
-    corner = int(input("Which corner do you want to start in?\nTop Left = 1\nBottom Left = 2\nTop Right = 3\nBottom Left = 4\n"))
+    banner_text("---MAP SECTION---\nHow big do you want your map? >>")
+    mapsize = int(input())
+    banner_text("Which corner do you want to start in?\nTop Left \t= 1\nBottom Left \t= 2\nTop Right \t= 3\nBottom Left \t= 4\n>>")
+    corner = int(input())
     if corner == 1:
         startzone = (0, 0)
         endzone = (mapsize - 1, mapsize - 1)
@@ -30,10 +32,8 @@ def map_function():
     elif corner == 4:
         startzone = (mapsize - 1, mapsize - 1)
         endzone = (0, 0)
-    print("mapsize: ", mapsize)
-    print("corner: ", corner)
-    print("startzone: ", startzone)
-    print("endzone: ", endzone)
+    # TEST PRINT TO CHECK MERGING W, MENU
+    # print("mapsize: {} - corner: {} - startzone: {} - endzone: {}".format(mapsize, corner, startzone, endzone))
     ok(mapsize, startzone, endzone)
 
 
@@ -44,6 +44,59 @@ def quit_game():
         print(".", end="", flush=True)
         time.sleep(0.3)
     print()
+
+
+def new_player_function(reserved_name, game):
+    # ------ NEW PLAYER FUCNTION START -----
+
+    banner_text("--------------\nPick your Hero\n--------------")
+    hero_selection = int(input("\n1.The Knight !\n2.Wizard\n3.The Thief\n>>"))
+    name_occupied = True
+    while name_occupied:
+        banner_text("Give your hero a name >>")
+        hero_name = input()
+
+        # checks in list if name is already taken or name length not longer then 10 spaces
+        if hero_name not in reserved_name and len(hero_name) < 10:
+            name_occupied = False
+        else:
+            print("Name taken or too long (MAX 9 characters allowed)")
+
+    # Hero object created and given its name
+    if hero_selection == 1:
+        in_game_char = Knight(hero_name)
+    elif hero_selection == 2:
+        in_game_char = Wizard(hero_name)
+    elif hero_selection == 3:
+        in_game_char = Thief(hero_name)
+    else:
+        print("Option N/A.\nTry again...")
+
+    # Sparar gubbe (till nästa gång)
+    game.save(in_game_char)
+    print("OK '" + in_game_char.name + "' let's go!")
+
+    return in_game_char
+
+    # ------ NEW PLAYER FUCNTION END -----
+
+
+def load_player(all_obj):
+    # ------ LOAD PLAYER FUCNTION START -----
+
+    print("\n\t\t\t---------SAVED HERO OPTIONS---------")
+    print("{:>6}{:>10}{:>15}{:>10}{:>10}{:>10}{:>14}{:>13}\n".format("Name", "Type", "Initiative", "Health", "Attack", "Agility", "Specialty", "Money"))
+    for count, obj in enumerate(all_obj, 1):
+        print(count, obj)
+
+    banner_text("CHOOSE SAVED CHARACTER BY NUMBER  >>")
+    my_char = int(input())
+    in_game_char = all_obj[my_char - 1]
+    print("Chosen character: ", in_game_char.name)
+
+    return in_game_char
+
+    # ------ LOAD PLAYER FUCNTION END -----
 
 
 def start_game():
@@ -64,53 +117,26 @@ def start_game():
 
         if user_entry2 == 'N':
             input_not_fulfilled = False
-
-            banner_text("--------------\nPick your Hero\n--------------")
-            hero_selection = int(input("\n1.The Knight !\n2.Wizard\n3.The Thief\n>>"))
-            name_occupied = True
-            while name_occupied:
-                banner_text("Give your hero a name >>")
-                hero_name = input()
-
-                # checks in list if name is already taken or name length not longer then 10 spaces
-                if hero_name not in reserved_name and len(hero_name) < 10:
-                    name_occupied = False
-                else:
-                    print("Name taken or too long (MAX 9 characters allowed)")
-
-            # Hero object created and given its name
-            if hero_selection == 1:
-                in_game_char = Knight(hero_name)
-            elif hero_selection == 2:
-                in_game_char = Wizard(hero_name)
-            elif hero_selection == 3:
-                in_game_char = Thief(hero_name)
-            else:
-                print("Option N/A.\nTry again...")
-
-            # Sparar gubbe (till nästa gång)
-            game.save(in_game_char)
-            print("OK '" + in_game_char.name + "' let's go!")
+            in_game_char = new_player_function(reserved_name, game)
 
         elif user_entry2 == 'L':
             input_not_fulfilled = False
 
-            print("\n\t\t\t---------SAVED HERO OPTIONS---------")
-            print("{:>6}{:>10}{:>15}{:>10}{:>10}{:>10}{:>14}{:>13}\n".format("Name", "Type", "Initiative", "Health", "Attack", "Agility", "Specialty", "Money"))
-            for count, obj in enumerate(all_obj, 1):
-                print(count, obj)
+            if len(all_obj) == 0:
+                banner_text("NO player to choose from.... REDIRECTING TO CREATE NEW PLAYER")
+                banner_text("...\n")
+                # DIRECT TO NEW PLAYER FUNCTION
+                in_game_char = new_player_function(reserved_name, game)
 
-            banner_text("CHOOSE SAVED CHARACTER BY NUMBER  >>")
-            my_char = int(input())
-            in_game_char = all_obj[my_char - 1]
-            print("Chosen character: ", in_game_char.name)
+            else:
+                in_game_char = load_player(all_obj)
 
         else:
             print("Option N/A.\nTry again...")
 
-    map_function()
+    map_function(in_game_char)
 
-    quit_game()
+    # quit_game(in_game_char)
 
 
 if __name__ == "__main__":

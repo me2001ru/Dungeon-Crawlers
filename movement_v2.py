@@ -1,4 +1,5 @@
 from DungeonWorld import DungeonMap
+from pickle_menu import *
 
 
 class Movement:
@@ -16,44 +17,47 @@ class Movement:
         if d == 'r':
             pos = (x + 1, y)
             # REMOVE ME DEV TEXT
-            print(pos)
-            print("pos")
-            print(self.player)
-            print("player")
-            print(self.goal)
+            # print(pos)
+            # print("pos")
+            # print(self.player)
+            # print("player")
+            # print(self.goal)
 
         elif d == 'l':
             pos = (x - 1, y)
             # REMOVE ME DEV TEXT
-            print(pos)
-            print("pos")
-            print(self.player)
-            print("player")
+            # print(pos)
+            # print("pos")
+            # print(self.player)
+            # print("player")
 
         elif d == 'u':
             pos = (x, y - 1)
             # REMOVE ME DEV TEXT
-            print(pos)
-            print("pos")
-            print(self.player)
-            print("player")
+            # print(pos)
+            # print("pos")
+            # print(self.player)
+            # print("player")
 
         elif d == 'd':
             pos = (x, y + 1)
             # REMOVE ME DEV TEXT
-            print(pos)
-            print("pos")
-            print(self.player)
-            print("player")
+            # print(pos)
+            # print("pos")
+            # print(self.player)
+            # print("player")
 
         else:
             pass
 
+        print("------------------------")
         if pos not in self.walls:
             self.player = pos
 
         if pos == self.goal:
             print("You made it to the end!")
+            # calling quit function if user reaches goal
+            quit_game()
 
         if (pos[1] < 0) or (pos[0] < 0) or (pos[0] > (mapsize - 1)) or (pos[1] > (mapsize - 1)):
             print("Outside bounds!")
@@ -83,5 +87,5 @@ def ok(mapsize, startzone, endzone):
 
     while c.player != c.goal:
         a.display_map()
-        d = input("Which way? (r, l, u, d)\n")
+        d = input("Which way? (r, l, u, d)  >>")
         c.move_player(d, startzone, mapsize, a)
