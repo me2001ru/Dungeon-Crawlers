@@ -1,7 +1,7 @@
 import time
 import pickle
 from DungeonWorld import DungeonMap
-from movement_2 import *
+from movement_v2 import *
 from characters_pickle_design import *
 
 
