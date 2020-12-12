@@ -13,9 +13,9 @@ class Characters:
         self.special = special
         self.wallet = wallet
 
-    # def all_stats(self):  # function that prints out all-stats of object
-    #    allstats = self.__dict__
-    #    return allstats
+    def all_stats(self):  # function that prints out all-stats of object
+        allstats = self.__dict__
+        return allstats
 
     def __repr__(self):
         return "{:<10}{:<13}{:<13}{:<10}{:<10}{:<8}{:<19}{:<13}".format(self.name, self.character, self.initiative, self.endurance, self.attack, self.agility, self.special, self.wallet)
