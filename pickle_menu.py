@@ -13,8 +13,18 @@ def banner_text(text):
 
 def map_function(in_game_char):
     # MENY SAKER TILL MAPS
-    banner_text("---MAP SECTION---\nHow big do you want your map? >>")
-    mapsize = int(input())
+    # banner_text("---MAP SECTION---\nHow big do you want your map? >>")
+    # mapsize = int(input())
+    print("---MAP SECTION---\n")
+    ask = True
+    while ask:
+        banner_text("How big do you want your map?\n4x4, 5x5 or 8x8? >>")
+        mapsize = int(input()[0])
+        if mapsize == 4 or mapsize == 5 or mapsize == 8:
+            ask = False
+        else:
+            print("Try again...", end=" ")
+
     banner_text("Which corner do you want to start in?\nTop Left \t= 1\nBottom Left \t= 2\nTop Right \t= 3\nBottom Left \t= 4\n>>")
     corner = int(input())
     if corner == 1:
