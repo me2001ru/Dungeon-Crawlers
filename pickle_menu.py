@@ -89,10 +89,14 @@ def load_player(all_obj):
     for count, obj in enumerate(all_obj, 1):
         print(count, obj)
 
-    banner_text("CHOOSE SAVED CHARACTER BY NUMBER  >>")
-    my_char = int(input())
-    in_game_char = all_obj[my_char - 1]
-    print("Chosen character: ", in_game_char.name)
+    try:
+        banner_text("CHOOSE SAVED CHARACTER BY NUMBER  >>")
+        my_char = int(input())
+        in_game_char = all_obj[my_char - 1]
+        print("\nChosen character: ", in_game_char.name)
+    except Exception:
+        print("\nIncorrect value passed forgiven alternatives... u suck!")
+        in_game_char = load_player(all_obj)
 
     return in_game_char
 
