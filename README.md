@@ -14,8 +14,3 @@ What's been done in each Branch:
 ## Martin Branch
 
 ## Mehsum Branch
-- Created Upstream to Lenjuz
-- Created branch
-- Virtual environment
-- Updated Python Interpreter
-- Initial text added
