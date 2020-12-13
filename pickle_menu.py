@@ -60,7 +60,8 @@ def quit_game():
 def new_player_function(reserved_name, game):
     # ------ NEW PLAYER FUCNTION START -----
 
-    banner_text("--------------\nPick your Hero\n--------------")
+    banner_text("--------------PICK YOUR HERO--------------")
+    time.sleep(0.1)
     hero_selection = int(input("\n1.The Knight !\n2.Wizard\n3.The Thief\n>>"))
     name_occupied = True
     while name_occupied:
