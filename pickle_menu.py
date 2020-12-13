@@ -43,9 +43,9 @@ def map_function(in_game_char):
     elif corner == 4:
         startzone = (mapsize - 1, mapsize - 1)
         endzone = (0, 0)
-    # TEST PRINT TO CHECK MERGING W, MENU
-    # print("mapsize: {} - corner: {} - startzone: {} - endzone: {}".format(mapsize, corner, startzone, endzone))
-    ok(mapsize, startzone, endzone)
+
+    # in_game_char latest value to been changed !
+    ok(mapsize, startzone, endzone, in_game_char)
 
 
 def quit_game():
@@ -61,7 +61,7 @@ def new_player_function(reserved_name, game):
     # ------ NEW PLAYER FUCNTION START -----
 
     banner_text("--------------PICK YOUR HERO--------------")
-    time.sleep(0.1)
+    time.sleep(0)
     hero_selection = int(input("\n1.The Knight !\n2.Wizard\n3.The Thief\n>>"))
     name_occupied = True
     while name_occupied:
