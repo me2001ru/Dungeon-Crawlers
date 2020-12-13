@@ -12,7 +12,7 @@ class Movement:
         self.clean = ("\n" * 100)
         self.finished = 1
 
-    def move_player(self, d, startzone, mapsize, a):
+    def move_player(self, d, startzone, mapsize, a, in_game_char):
         x = self.player[0]
         y = self.player[1]
         pos = startzone
@@ -77,6 +77,7 @@ class Movement:
 def ok(mapsize, startzone, endzone, in_game_char):
     c = Movement(startzone, endzone)
     a = DungeonMap(mapsize)
+    in_game_char = in_game_char
 
     while c.player != 5:
         print(c.clean)
