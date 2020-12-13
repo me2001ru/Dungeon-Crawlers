@@ -31,6 +31,11 @@ class Characters:
                 pass
         return char_list
 
+    def edit_char(self, datalist):
+        with open("saved_characters.pkl", "wb") as pf:
+            for i in datalist:
+                pickle.dump(i, pf)
+
     def save(self, character):  # save characters in pickle file
         char_list = []
         with open("saved_characters.pkl", "rb") as fp:
