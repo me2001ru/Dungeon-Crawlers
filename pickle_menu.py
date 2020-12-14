@@ -2,7 +2,8 @@ import time
 import pickle
 from DungeonWorld import DungeonMap
 from movement_v2 import *
-from characters_pickle_design import *
+# from characters_pickle_design import *
+from characters_adi import *
 
 
 def banner_text(text):
@@ -11,9 +12,9 @@ def banner_text(text):
         time.sleep(0.03)
 
 
-def map_function(in_game_char):
+def map_function(in_game_char, all_obj):
     # MENY SAKER TILL MAPS
-    print("---MAP SECTION---\n")
+    print("\n---MAP SECTION---")
     ask = True
     while ask:
         banner_text("How big do you want your map?\n4x4, 5x5 or 8x8? >>")
@@ -26,7 +27,7 @@ def map_function(in_game_char):
         except Exception:
             print("-Exception- Entry must begin with a number...Try again...", end=" ")
 
-    banner_text("Which corner do you want to start in?\nTop Left \t= 1\nBottom Left \t= 2\nTop Right \t= 3\nBottom Left \t= 4\n>>")
+    banner_text("\nWhich corner do you want to start in?\nTop Left \t= 1\nBottom Left \t= 2\nTop Right \t= 3\nBottom Left \t= 4\n>>")
     corner = int(input())
     if corner == 1:
         startzone = (0, 0)
@@ -45,7 +46,7 @@ def map_function(in_game_char):
         endzone = (0, 0)
 
     # in_game_char latest value to been changed !
-    ok(mapsize, startzone, endzone, in_game_char)
+    ok(mapsize, startzone, endzone, in_game_char, all_obj)
 
 
 def quit_game():
@@ -150,7 +151,7 @@ def start_game():
         else:
             print("Option N/A.\nTry again...")
 
-    map_function(in_game_char)
+    map_function(in_game_char, all_obj)
 
     # quit_game(in_game_char)
 
