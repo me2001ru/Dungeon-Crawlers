@@ -20,19 +20,27 @@ class Movement:
 
         if d == 'd':
             pos = (x + 1, y)
-            banner_text("You move to the right...")
+            print(self.clean)
+            banner_text("You move to the right...\n")
+            time.sleep(1)
 
         elif d == 'a':
             pos = (x - 1, y)
-            banner_text("You move to the left...")
+            print(self.clean)
+            banner_text("You move to the left...\n")
+            time.sleep(1)
 
         elif d == 'w':
             pos = (x, y - 1)
-            banner_text("You take the stairs up...")
+            print(self.clean)
+            banner_text("You take the stairs up...\n")
+            time.sleep(1)
 
         elif d == 's':
             pos = (x, y + 1)
-            banner_text("You take the stairs down...")
+            print(self.clean)
+            banner_text("You take the stairs down...\n")
+            time.sleep(1)
 
         else:
             pos = self.player
@@ -43,11 +51,11 @@ class Movement:
         if pos == self.goal:
             print(self.clean)
             banner_text("You have made it to a very large mechanical door of sort, with a lever right next to it...\n")
-            banner_text("there is also sunbeams coming in from the bottom of the door...\n")
-            time.sleep(0.5)
             banner_text('"This must be the exit!" You think to yourself\n')
+            time.sleep(1)
             last_choice = int(input("But do you greed more treasure or leave with what you have?\n1 = Stay\n2 = Leave\n"))
 
+            # NEEDS TRY/EXCEPT
             if last_choice == 1:
                 banner_text("You have decided to stay and return to the previous room...")
                 input()
@@ -56,47 +64,70 @@ class Movement:
                 print(self.clean)
 
             else:
-                # EXIT GAME! HIGHSCORE! SAVE CHARACTER!
-                banner_text("You pull the lever and are met with fresh air and sound of outside, you leave the dungeon")
-                time.sleep(0.5)
-                input("\nPRESS ENTER")
+                banner_text("You pull the lever and is met with fresh air and sound of nature, you leave the dungeon into the sunshine")
+                input()
                 self.banana = 5
-                # add save here before calling quits...
-                print("THIS IS THE END PADAWAN !", in_game_char)
                 quit_game()
 
         if (pos[1] < 0) or (pos[0] < 0) or (pos[0] > (mapsize - 1)) or (pos[1] > (mapsize - 1)):
             print(self.clean)
-            print("As you leave the room, darkness sweeps over you! When you finally manage to find your bearings, your back in the previous room again...")
-            time.sleep(0.5)
-            input("Something doesn't let you leave this way... (PRESS ENTER TO GO BACK)")
+            banner_text("As you leave the room, darkness sweeps over you! When you finally manage to find your bearings, your back in the previous room again...")
+            time.sleep(1)
             print(self.clean)
             self.player = (x, y)
             pos = self.player
         else:
+            victory = False
+            goldpls = 0
             if a.board[self.player[1]][self.player[0]] == "+":
                 handle = HandleFunc()
                 monst = handle.ShuffleMonster()
 
                 for i in monst:
                     if i != None:
-                        fightOrFlight(i, in_game_char)
+                        banner_text("Something is in this room, prepare for combat...\n\n\n\n")
+                        time.sleep(1)
+                        victory = fightOrFlight(i, in_game_char)
+                        goldpls += 1
 
-                    # else:
-                    #    break
-                handle2 = ShuffleTest()
-                loot = handle2.ShuffleBro()
-                summa = sum(loot)
-                print(loot)
-                print(summa)
-                handle3 = Handle()
-                # all_obj = handle3.load_pickle()
-                print(all_obj)
+                if (victory == True or goldpls == 0):
+                    handle2 = ShuffleTest()
+                    loot = handle2.ShuffleBro()
+                    summa = sum(loot)
+                    handle3 = Handle()
+                    # all_obj = handle3.load_pickle()
 
-                for i in all_obj:
-                    if i.name == in_game_char.name:
-                        in_game_char.wallet += summa
-                handle3.edit_char(all_obj)
+                    for i in all_obj:
+                        if i.name == in_game_char.name:
+                            in_game_char.wallet += summa
+                    handle3.edit_char(all_obj)
+
+                    print(self.clean)
+                    banner_text("You search the entire room for valuables...")
+                    time.sleep(2)
+                    if summa != 0:
+                        banner_text("you have found some loot!")
+                        print("\nLOOT & VALUE from this room")
+                        if loot[0] > 0:
+                            print(f'\nCoins: {loot[0]}')
+                        if loot[1] > 0:
+                            print(f'Money pouch: {loot[1]}')
+                        if loot[2] > 0:
+                            print(f'Gold Jewelry: {loot[2]} ')
+                        if loot[3] > 0:
+                            print(f'Gems: {loot[3]}')
+                        if loot[4] > 0:
+                            print(f'Small Treasure Chest: {loot[4]}')
+                        print(f'\nTotal riches collected here: {summa}')
+                        input("Press any key to continue...")
+                    else:
+                        banner_text("you found nothing of value in the room and carry on!")
+                        time.sleep(2)
+
+                else:
+                    banner_text("You retreat back so you receive no treasure!")
+                    self.player = (x, y)
+                    pos = self.player
 
             a.board[self.goal[1]][self.goal[0]] = "E"
             a.board[self.player[1]][self.player[0]] = "O"
@@ -111,8 +142,8 @@ def ok(mapsize, startzone, endzone, in_game_char, all_obj):
 
     while c.banana != 5:
         print(c.clean)
-        print("You ponder which direction to go next.")
-        print("Theres a light both left and right of you, but also from a couple stairs leading up and down...")
+        print("Theres light emitting from rooms, both left and right of your location...")
+        print("but also above and below as you spot a staircase")
         a.display_map()
-        d = input("Which way? (d, a, w, s)  >>")
+        d = input("Which way? (d, a, w, s)  \n>>")
         c.move_player(d, startzone, mapsize, a, in_game_char, all_obj)

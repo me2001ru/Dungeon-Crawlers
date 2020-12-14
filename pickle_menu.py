@@ -14,7 +14,7 @@ def banner_text(text):
 
 def map_function(in_game_char, all_obj):
     # MENY SAKER TILL MAPS
-    print("\n---MAP SECTION---")
+    print("---MAP SECTION---\n")
     ask = True
     while ask:
         banner_text("How big do you want your map?\n4x4, 5x5 or 8x8? >>")
@@ -27,7 +27,7 @@ def map_function(in_game_char, all_obj):
         except Exception:
             print("-Exception- Entry must begin with a number...Try again...", end=" ")
 
-    banner_text("\nWhich corner do you want to start in?\nTop Left \t= 1\nBottom Left \t= 2\nTop Right \t= 3\nBottom Left \t= 4\n>>")
+    banner_text("Which corner do you want to start in?\nTop Left \t= 1\nBottom Left \t= 2\nTop Right \t= 3\nBottom Left \t= 4\n>>")
     corner = int(input())
     if corner == 1:
         startzone = (0, 0)
@@ -58,7 +58,7 @@ def quit_game():
     print()
 
 
-def new_player_function(reserved_name, game):
+def new_player_function(reserved_name, game, all_obj):
     # ------ NEW PLAYER FUCNTION START -----
 
     banner_text("--------------PICK YOUR HERO--------------")
@@ -87,9 +87,10 @@ def new_player_function(reserved_name, game):
 
     # Sparar gubbe (till nästa gång)
     game.save(in_game_char)
+    all_obj.append(in_game_char)
     print("OK '" + in_game_char.name + "' let's go!")
 
-    return in_game_char
+    return in_game_char, all_obj
 
     # ------ NEW PLAYER FUCNTION END -----
 
@@ -134,7 +135,9 @@ def start_game():
 
         if user_entry2 == 'N':
             input_not_fulfilled = False
-            in_game_char = new_player_function(reserved_name, game)
+            test = new_player_function(reserved_name, game, all_obj)
+            in_game_char = test[0]
+            all_obj = test[1]
 
         elif user_entry2 == 'L':
             input_not_fulfilled = False
@@ -143,14 +146,15 @@ def start_game():
                 banner_text("NO player to choose from.... REDIRECTING TO CREATE NEW PLAYER")
                 banner_text("...\n")
                 # DIRECT TO NEW PLAYER FUNCTION
-                in_game_char = new_player_function(reserved_name, game)
+                test = new_player_function(reserved_name, game, all_obj)
+                in_game_char = test[0]
+                all_obj = test[1]
 
             else:
                 in_game_char = load_player(all_obj)
 
         else:
             print("Option N/A.\nTry again...")
-
     map_function(in_game_char, all_obj)
 
     # quit_game(in_game_char)

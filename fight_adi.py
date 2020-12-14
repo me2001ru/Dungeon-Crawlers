@@ -1,6 +1,9 @@
 import random
 from characters_adi import *
 from monster_treasure import *
+from pickle_menu import quit_game
+import sys
+import time
 
 
 def monster(mon):
@@ -43,10 +46,10 @@ def rngjesus(att, agi):
         luck += random.randint(1, 7)
         agi -= 1
     if (damage >= luck):
-        print(f"damage: {damage} luck: {luck}")
+        #print(f"damage: {damage} luck: {luck}")
         return True
     else:
-        print(f"damage: {damage} luck: {luck}")
+        #print(f"damage: {damage} luck: {luck}")
         return False
 
 
@@ -67,7 +70,7 @@ def charAttack(mon, char, mon_hp):
             mon_hp -= 2
             if (mon_hp <= 0):
                 print(dialog5)  # Character deals double damage
-                print(dialog9)  # Monster dies
+                input(dialog9)  # Monster dies
                 # break
             else:
                 print(dialog5)  # Character deals double damage
@@ -79,7 +82,7 @@ def charAttack(mon, char, mon_hp):
             mon_hp -= 1
             if (mon_hp == 0):
                 print(dialog2)  # Character attacks normally
-                print(dialog9)  # Monster dies
+                input(dialog9)  # Monster dies
                 # break
             else:
                 print(dialog2)  # Character attacks normally
@@ -106,7 +109,9 @@ def monAttack(initiative, mon, char, special, char_hp):
             if (rngjesus(monster(mon)['attack'], character(char)['agility']) == True):  # Throw dice, mon attack / char agil
                 char_hp -= 1
                 if (char_hp == 0):
-                    print(dialog8)  # Character dies
+                    input(dialog8)  # Character dies
+                    quit_game()
+                    sys.exit()
                     # break
                 print(dialog7)  # Character takes damage
                 print(f"Hp left: {char_hp}\n")
@@ -119,7 +124,9 @@ def monAttack(initiative, mon, char, special, char_hp):
             if (rngjesus(monster(mon)['attack'], character(char)['agility']) == True):
                 char_hp -= 1
                 if (char_hp == 0):
-                    print(dialog8)  # Character dies
+                    input(dialog8)  # Character dies
+                    quit_game()
+                    sys.exit()
                     # break
                 else:
                     print(dialog12)
@@ -130,7 +137,9 @@ def monAttack(initiative, mon, char, special, char_hp):
             if (rngjesus(monster(mon)['attack'], character(char)['agility']) == True):
                 char_hp -= 1
                 if (char_hp == 0):
-                    print(dialog8)  # Character dies
+                    input(dialog8)  # Character dies
+                    quit_game()
+                    sys.exit()
                     # break
                 else:
                     print(dialog12)
@@ -141,6 +150,9 @@ def monAttack(initiative, mon, char, special, char_hp):
 
 
 def fightOrFlight(mon, char):
+    win = True
+    # print(type(mon))
+    # print(type(char))
     #rngjesus(mon, char)
     special = True
     mon_initiative = False  # If true, monster starts every round
@@ -159,6 +171,8 @@ def fightOrFlight(mon, char):
 
     dialog1 = f"You encounter a {monster(mon)['monster']}\n"
     dialog6 = f"{character(char)['character']} brights up the room with a spell\n"
+    dialog13 = f"{character(char)['character']} takes 1 damage and meet his end\n"
+    dialog14 = f"{character(char)['character']} takes 1 damage but still stands\n"
     print(dialog1)  # Character encounters a monster
 
     while (mon_hp > 0 and char_hp > 0):
@@ -192,46 +206,24 @@ def fightOrFlight(mon, char):
             if (character(char)['special'] == 'Blinding Light' and special == True):
                 chanceToFlee = 8
                 print(dialog6)  # Character use flashlight to escape
+                input("Your escape was successful!")
                 special = False
+                win = False
                 break
             if (successfulEscape == True):
-                print("your escape was successful")
-
+                input("Your escape was successful!")
+                win = False
+                break
             else:
-                print("You cant run from this battle, fight!")
-
-
+                char_hp -= 1
+                if (char_hp <= 0):
+                    input(dialog13)  # character dies
+                    quit_game()
+                    sys.exit()
+                else:
+                    print("You attempt to run, but fail...")
+                    time.sleep(2)
+                    print(dialog14)
+    return win
 # tr = Troll | sk = Skeleton | sp = Giant spider | or = Orc
 # pl = Paladin | wi = Wizard | ro = Rogue
-'''
-def main():
-    rndMon = random.randint(0,5)
-    if rndMon == 1:
-        mon = GiantSpider()
-    elif rndMon == 2:
-        mon = Skeletton()
-    elif rndMon == 3:
-        mon = Orc()
-    else:
-        mon = Troll()
-    choice = int(input("Choose what you want to be:\n 1. Knight, 2. Wizard, 3. Thief\n : "))
-    if choice == 1:
-        username = input("You choice was to become a Knight! Enter username for your Knight: ")
-        champ = Knight(username)
-        fightOrFlight(mon, champ)
-    if choice == 2:
-        username = input("You choice was to become a Wizard! Enter username for your Wizard: ")
-        champ = Wizard(username)
-        fightOrFlight(mon, champ)
-    if choice == 3:
-        username = input("You choice was to become a Thief! Enter username for your Thief: ")
-        champ = Thief(username)
-        fightOrFlight(mon, champ)
-    # name = input("Name: ")
-    # champ = Knight(name)
-    # fightOrFlight('or', champ)
-
-
-if __name__ == "__main__":
-    main()
-'''
