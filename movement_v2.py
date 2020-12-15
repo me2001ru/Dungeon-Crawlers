@@ -12,6 +12,8 @@ class Movement:
         self.walls = (0, 0)
         self.clean = ("\n" * 100)
         self.banana = 0
+        self.monstersave = []
+        self.monstercord = []
 
     def move_player(self, d, startzone, mapsize, a, in_game_char, all_obj):
         x = self.player[0]
@@ -52,8 +54,17 @@ class Movement:
             print(self.clean)
             banner_text("You have made it to a very large mechanical door of sort, with a lever right next to it...\n")
             banner_text('"This must be the exit!" You think to yourself\n')
-            time.sleep(1)
-            last_choice = int(input("But do you greed more treasure or leave with what you have?\n1 = Stay\n2 = Leave\n"))
+            time.sleep(2)
+
+            while True:
+                last_choice = input("But do you greed more treasure or leave with what you have?\n1 = Stay\n2 = Leave\n")
+                if (last_choice != '1' and last_choice != '2'):
+                    print("Invalid option")
+                    continue
+                else:
+                    break
+
+            last_choice = int(last_choice)
 
             # NEEDS TRY/EXCEPT
             if last_choice == 1:
@@ -72,7 +83,7 @@ class Movement:
         if (pos[1] < 0) or (pos[0] < 0) or (pos[0] > (mapsize - 1)) or (pos[1] > (mapsize - 1)):
             print(self.clean)
             banner_text("As you leave the room, darkness sweeps over you! When you finally manage to find your bearings, your back in the previous room again...")
-            time.sleep(1)
+            time.sleep(0.1)
             print(self.clean)
             self.player = (x, y)
             pos = self.player
@@ -80,15 +91,24 @@ class Movement:
             victory = False
             goldpls = 0
             if a.board[self.player[1]][self.player[0]] == "+":
-                handle = HandleFunc()
-                monst = handle.ShuffleMonster()
+                if len(self.monstercord) != 0:
+                    for j, k in enumerate(self.monstercord):
+                        if self.player == self.monstercord[j]:
+                            victory = fightOrFlight(self.monstersave[j], in_game_char)
 
-                for i in monst:
-                    if i != None:
-                        banner_text("Something is in this room, prepare for combat...\n\n\n\n")
-                        time.sleep(1)
-                        victory = fightOrFlight(i, in_game_char)
-                        goldpls += 1
+                if (victory == False):
+                    handle = HandleFunc()
+                    monst = handle.ShuffleMonster()
+
+                    for i in monst:
+                        if i != None:
+                            banner_text("Something is in this room, prepare for combat...\n\n\n\n")
+                            time.sleep(1)
+                            victory = fightOrFlight(i, in_game_char)
+                            if (victory == False):
+                                self.monstersave.append(i)
+                                self.monstercord.append(self.player)
+                            goldpls += 1
 
                 if (victory == True or goldpls == 0):
                     handle2 = ShuffleTest()
@@ -104,7 +124,7 @@ class Movement:
 
                     print(self.clean)
                     banner_text("You search the entire room for valuables...")
-                    time.sleep(2)
+                    time.sleep(1)
                     if summa != 0:
                         banner_text("you have found some loot!")
                         print("\nLOOT & VALUE from this room")
@@ -122,7 +142,7 @@ class Movement:
                         input("Press any key to continue...")
                     else:
                         banner_text("you found nothing of value in the room and carry on!")
-                        time.sleep(2)
+                        time.sleep(1)
 
                 else:
                     banner_text("You retreat back so you receive no treasure!")
